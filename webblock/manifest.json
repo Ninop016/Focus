@@ -1,0 +1,10 @@
+{
+  "name": "Website Blocker",
+  "version": "1.0.3",
+  "description": "Blocks distracting websites.",
+  "permissions": ["webRequest", "webRequestBlocking", "<all_urls>"],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "manifest_version": 2
+}
