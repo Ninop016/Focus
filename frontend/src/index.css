@@ -1,3 +1,21 @@
+/* Comprehensive CSS Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+/* Apply consistent styling */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #242424;  /* Match with :root */
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,7 +41,6 @@ a:hover {
 }
 
 body {
-  margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
@@ -66,3 +83,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Debugging Styles */
+html, body {
+  border: 2px solid red;  /* Temporary border for debugging */
+}
+
+#root {
+  background-color: yellow;  /* Temporary background for debugging */
+}
+
