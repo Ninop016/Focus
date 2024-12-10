@@ -117,7 +117,7 @@ function App() {
           {showFeedback ? "Back to App" : "Submit Feedback"}
         </button>
       </div>
-      <h1>Focus Timer App</h1>
+      <h1>ClearSpace</h1>
       {showFeedback ? (
         <SubmitFeedback onSurveyComplete={handleToggleFeedback} />
       ) : isMeditation ? (
