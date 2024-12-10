@@ -43,4 +43,4 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 updateBlockedWebsites();
-setInterval(updateBlockedWebsites, 1000); // Update every 5 minutes
+setInterval(updateBlockedWebsites, 1000); // Update every 1 second
