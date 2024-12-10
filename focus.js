@@ -107,6 +107,7 @@ function addWebsite() {
     }).then(() => {
       updateBlockedWebsites();
       websiteInput.value = "";
+      window.postMessage({ type: 'websiteAdded' }, '*');
     });
   }
 }

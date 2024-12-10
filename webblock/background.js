@@ -34,5 +34,13 @@ function blockRequest(details) {
   return { cancel: true };
 }
 
+// background.js
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.type === 'websiteAdded') {
+    updateBlockedWebsites();
+  }
+});
+
 updateBlockedWebsites();
-setInterval(updateBlockedWebsites, 300000); // Update every 5 minutes
+setInterval(updateBlockedWebsites, 1000); // Update every 5 minutes
