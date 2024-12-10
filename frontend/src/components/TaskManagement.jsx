@@ -1,14 +1,14 @@
-// src/components/TaskManagement.jsx
-import { useState } from 'react';
+import { useState } from "react";
 
-function TaskManagement() {
-  const [taskInput, setTaskInput] = useState('');
+function TaskManagement({ addPoints }) {
+  const [taskInput, setTaskInput] = useState("");
   const [tasks, setTasks] = useState([]);
 
   const addTask = () => {
-    if (taskInput.trim() !== '') {
+    if (taskInput.trim() !== "") {
       setTasks([...tasks, taskInput.trim()]);
-      setTaskInput('');
+      setTaskInput("");
+      addPoints(10); // Add 10 points for each task added
     }
   };
 

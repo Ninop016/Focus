@@ -1,16 +1,22 @@
-// src/App.jsx
 import React, { useState } from "react";
 import FocusTimer from "./components/FocusTimer";
 import TaskManagement from "./components/TaskManagement";
 import DistractionBlocker from "./components/DistractionBlocker";
 import MeditationSession from "./components/MeditationSession";
 import SubmitFeedback from "./components/SubmitFeedback";
+import Gamification from "./components/Gamification";
 import "./styles.css";
 
 function App() {
   const [isMeditation, setIsMeditation] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [points, setPoints] = useState(0);
+
+  // Function to add points
+  const addPoints = (amount) => {
+    setPoints((prev) => prev + amount);
+  };
 
   const startMeditation = () => {
     setIsMeditation(true);
@@ -42,8 +48,9 @@ function App() {
       ) : (
         <div className="container">
           <FocusTimer startMeditation={startMeditation} />
-          <TaskManagement />
-          <DistractionBlocker />
+          <TaskManagement addPoints={addPoints} />
+          <DistractionBlocker addPoints={addPoints} />
+          <Gamification points={points} />
         </div>
       )}
     </div>

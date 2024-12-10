@@ -1,17 +1,16 @@
-// src/components/DistractionBlocker.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-function DistractionBlocker() {
-  const [websiteInput, setWebsiteInput] = useState('');
+function DistractionBlocker({ addPoints }) {
+  const [websiteInput, setWebsiteInput] = useState("");
   const [websites, setWebsites] = useState([]);
 
   const fetchWebsites = () => {
-    fetch('/api/blocked-websites')
+    fetch("/api/blocked-websites")
       .then((response) => response.json())
       .then((data) => {
         setWebsites(data.blockedWebsites);
       })
-      .catch((error) => console.error('Error fetching websites:', error));
+      .catch((error) => console.error("Error fetching websites:", error));
   };
 
   useEffect(() => {
@@ -19,30 +18,31 @@ function DistractionBlocker() {
   }, []);
 
   const addWebsite = () => {
-    if (websiteInput.trim() !== '') {
-      fetch('/api/blocked-websites', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+    if (websiteInput.trim() !== "") {
+      fetch("/api/blocked-websites", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ website: websiteInput.trim() }),
       })
         .then(() => {
           fetchWebsites();
-          setWebsiteInput('');
+          setWebsiteInput("");
+          addPoints(10); // Add 10 points for each website added
         })
-        .catch((error) => console.error('Error adding website:', error));
+        .catch((error) => console.error("Error adding website:", error));
     }
   };
 
   const removeWebsite = (website) => {
-    fetch('/api/blocked-websites', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("/api/blocked-websites", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ website }),
     })
       .then(() => {
         fetchWebsites();
       })
-      .catch((error) => console.error('Error removing website:', error));
+      .catch((error) => console.error("Error removing website:", error));
   };
 
   return (
