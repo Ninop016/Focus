@@ -3,31 +3,39 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 
 const Gamification = () => {
-  const [points, setPoints] = useState(0);
-  const [badges, setBadges] = useState([]);
-  const [streak, setStreak] = useState(0);
+  const [points, setPoints] = useState(() => {
+    // Load points from localStorage on initial render
+    const savedPoints = localStorage.getItem("points");
+    return savedPoints ? parseInt(savedPoints, 10) : 0;
+  });
+
+  const [badges, setBadges] = useState(() => {
+    const savedBadges = localStorage.getItem("badges");
+    return savedBadges ? JSON.parse(savedBadges) : [];
+  });
+
+  const [streak, setStreak] = useState(() => {
+    const savedStreak = localStorage.getItem("streak");
+    return savedStreak ? parseInt(savedStreak, 10) : 0;
+  });
+
   const [isVisible, setIsVisible] = useState(true);
   const [showConfetti, setShowConfetti] = useState(false);
 
   const { width, height } = useWindowSize();
 
-  // Load saved data
-  useEffect(() => {
-    const savedPoints = localStorage.getItem("points");
-    const savedBadges = JSON.parse(localStorage.getItem("badges"));
-    const savedStreak = localStorage.getItem("streak");
-
-    if (savedPoints) setPoints(parseInt(savedPoints, 10));
-    if (savedBadges) setBadges(savedBadges);
-    if (savedStreak) setStreak(parseInt(savedStreak, 10));
-  }, []);
-
-  // Save data
+  // Save data to localStorage whenever points, badges, or streak change
   useEffect(() => {
     localStorage.setItem("points", points);
+  }, [points]);
+
+  useEffect(() => {
     localStorage.setItem("badges", JSON.stringify(badges));
+  }, [badges]);
+
+  useEffect(() => {
     localStorage.setItem("streak", streak);
-  }, [points, badges, streak]);
+  }, [streak]);
 
   const completeFocusSession = () => {
     setPoints((prev) => {
