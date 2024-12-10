@@ -77,7 +77,7 @@ function App() {
           <svg width="220" height="220">
             <circle
               className="progress-ring__background"
-              stroke="#e6e6e6"
+              stroke="#2E8B57"
               strokeWidth="10"
               fill="transparent"
               r="100"
@@ -95,16 +95,26 @@ function App() {
               strokeDasharray={circumference}
               strokeDashoffset={offset}
             />
+            <text
+              x="50%"
+              y="50%"
+              dominantBaseline="middle"
+              textAnchor="middle"
+              fontSize="2em"
+              fill="#2E8B57"
+            >
+              {`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`}
+            </text>
           </svg>
-          <div className="timer-text">
-            {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+          <div className="buttons">
+            <button onClick={startTimer}>Start</button>
+            <button onClick={resetTimer}>Reset</button>
           </div>
         </div>
-        <button onClick={startTimer}>Start</button>
-        <button onClick={resetTimer}>Reset</button>
       </div>
     );
   }
+
 
   return (
     <div className={`app ${darkMode ? "dark-mode" : ""}`}>
