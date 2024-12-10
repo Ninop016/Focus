@@ -46,7 +46,7 @@ function FocusTimer({ startMeditation }) {
 
   const popupStyle = {
     position: 'fixed',
-    top: '50%',
+    top: '30%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     backgroundColor: 'rgba(0, 0, 0, 1)',
