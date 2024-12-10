@@ -4,7 +4,8 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-let blockedWebsites = [];
+let blockedWebsites = ['facebook.com', 'disney.com']; // Hardcode for testing
+
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.post('/api/blocked-websites', (req, res) => {
   const website = req.body.website;
   if (website && !blockedWebsites.includes(website)) {
     blockedWebsites.push(website);
+    console.log('Website added:', website); // Add this line
   }
   res.json({ blockedWebsites });
 });
@@ -26,9 +28,12 @@ app.post('/api/blocked-websites', (req, res) => {
 app.delete('/api/blocked-websites', (req, res) => {
   const website = req.body.website;
   blockedWebsites = blockedWebsites.filter((site) => site !== website);
+  console.log('Website removed:', website); // Add this line
   res.json({ blockedWebsites });
 });
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
