@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState, useEffect } from "react";
 import FocusTimer from "./components/FocusTimer";
 import TaskManagement from "./components/TaskManagement";
@@ -28,14 +27,14 @@ function App() {
     const [duration, setDuration] = useState(25);
     const [timeLeft, setTimeLeft] = useState(duration * 60);
     const [isActive, setIsActive] = useState(false);
-  
+
     const radius = 100;
     const circumference = 2 * Math.PI * radius;
-  
+
     useEffect(() => {
       setTimeLeft(duration * 60);
     }, [duration]);
-  
+
     useEffect(() => {
       let timer = null;
       if (isActive && timeLeft > 0) {
@@ -48,22 +47,22 @@ function App() {
       }
       return () => clearInterval(timer);
     }, [isActive, timeLeft, startMeditation]);
-  
+
     const startTimer = () => {
       setIsActive(true);
     };
-  
+
     const resetTimer = () => {
       setIsActive(false);
       setTimeLeft(duration * 60);
     };
-  
+
     const progress = timeLeft / (duration * 60);
     const offset = circumference - progress * circumference;
-  
+
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
-  
+
     return (
       <div className="focus-timer">
         <h2>Focus Timer</h2>
@@ -106,7 +105,7 @@ function App() {
       </div>
     );
   }
-  
+
   return (
     <div className={`app ${darkMode ? "dark-mode" : ""}`}>
       <div className="top-right-buttons">
@@ -124,9 +123,15 @@ function App() {
         <MeditationSession endMeditation={endMeditation} />
       ) : (
         <div className="container">
-          <FocusTimer startMeditation={startMeditation} />
-          <TaskManagement />
-          <DistractionBlocker />
+          <div className="left-side">
+            <TaskManagement />
+          </div>
+          <div className="center">
+            <FocusTimer startMeditation={startMeditation} />
+          </div>
+          <div className="right-side">
+            <DistractionBlocker />
+          </div>
         </div>
       )}
     </div>

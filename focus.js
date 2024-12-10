@@ -144,3 +144,4 @@ function removeWebsite(website) {
 document.addEventListener('DOMContentLoaded', () => {
   updateBlockedWebsites();
 });
+

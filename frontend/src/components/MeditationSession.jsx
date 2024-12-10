@@ -1,4 +1,3 @@
-// src/components/MeditationSession.jsx
 import { useEffect } from 'react';
 
 function MeditationSession({ endMeditation }) {

@@ -1,4 +1,3 @@
-// src/components/DistractionBlocker.jsx
 import { useState, useEffect } from 'react';
 
 function DistractionBlocker() {
