@@ -403,3 +403,16 @@ li .task {
     margin: 20px auto 0;
   }
   
+  .meditation-session {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Add this line to center horizontally */
+    height: 100%; /* Ensure it takes full height of the parent */
+  }
+  
+  .meditation-session video {
+    width: 900px;
+    max-width: 100%;
+    height: auto;
+  }

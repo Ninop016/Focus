@@ -1,60 +1,41 @@
 import { useState, useEffect } from 'react';
 
-function FocusTimer({ startMeditation }) {
-  const [minutes, setMinutes] = useState(25);
-  const [seconds, setSeconds] = useState(0);
+function FocusTimer({ startMeditation, autoStartMeditation }) {
   const [duration, setDuration] = useState(25);
+  const [timeLeft, setTimeLeft] = useState(duration * 60);
   const [isActive, setIsActive] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  const [autoStart, setAutoStart] = useState(false);
+
+  useEffect(() => {
+    setTimeLeft(duration * 60);
+  }, [duration]);
 
   useEffect(() => {
     let timer = null;
-    if (isActive) {
+    if (isActive && timeLeft > 0) {
       timer = setInterval(() => {
-        if (seconds === 0) {
-          if (minutes === 0) {
-            clearInterval(timer);
-            setIsActive(false);
-            setShowPopup(true);
-            setTimeout(() => {
-              setShowPopup(false);
-              startMeditation();
-            }, 3000);
-          } else {
-            setMinutes((prev) => prev - 1);
-            setSeconds(59);
-          }
-        } else {
-          setSeconds((prev) => prev - 1);
-        }
+        setTimeLeft(prev => prev - 1);
       }, 1000);
+    } else if (timeLeft === 0 && isActive) {
+      setIsActive(false);
+      startMeditation();
+      if (autoStart) {
+        setTimeout(() => {
+          setIsActive(true);
+          setTimeLeft(duration * 60);
+        }, 1000);
+      }
     }
     return () => clearInterval(timer);
-  }, [isActive, minutes, seconds, startMeditation]);
+  }, [isActive, timeLeft, startMeditation, autoStart, duration]);
 
   const startTimer = () => {
-    setMinutes(duration);
-    setSeconds(0);
     setIsActive(true);
   };
 
   const resetTimer = () => {
     setIsActive(false);
-    setMinutes(duration);
-    setSeconds(0);
-  };
-
-  const popupStyle = {
-    position: 'fixed',
-    top: '30%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: 'rgba(0, 0, 0, 1)',
-    color: '#fff',
-    padding: '20px',
-    borderRadius: '10px',
-    textAlign: 'center',
-    zIndex: '1000',
+    setTimeLeft(duration * 60);
   };
 
   return (
@@ -67,17 +48,20 @@ function FocusTimer({ startMeditation }) {
         onChange={(e) => setDuration(parseInt(e.target.value))}
         placeholder="Focus Duration (minutes)"
       />
-      <p id="timer-display">
-        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-      </p>
+      <div className="timer-display">
+        {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
+      </div>
       <button onClick={startTimer}>Start</button>
       <button onClick={resetTimer}>Reset</button>
-
-      {showPopup && (
-        <div id="break-popup" style={popupStyle}>
-          <h2>Time for a break!</h2>
-        </div>
-      )}
+      <div>
+        <input
+          type="checkbox"
+          id="autoStart"
+          checked={autoStart}
+          onChange={(e) => setAutoStart(e.target.checked)}
+        />
+        <label htmlFor="autoStart">Auto-start timer after meditation</label>
+      </div>
     </div>
   );
 }
