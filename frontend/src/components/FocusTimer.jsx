@@ -1,4 +1,3 @@
-// src/components/FocusTimer.jsx
 import { useState, useEffect } from 'react';
 
 function FocusTimer({ startMeditation }) {
@@ -6,6 +5,7 @@ function FocusTimer({ startMeditation }) {
   const [seconds, setSeconds] = useState(0);
   const [duration, setDuration] = useState(25);
   const [isActive, setIsActive] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     let timer = null;
@@ -15,8 +15,11 @@ function FocusTimer({ startMeditation }) {
           if (minutes === 0) {
             clearInterval(timer);
             setIsActive(false);
-            alert('Time for a break!');
-            startMeditation();
+            setShowPopup(true);
+            setTimeout(() => {
+              setShowPopup(false);
+              startMeditation();
+            }, 3000);
           } else {
             setMinutes((prev) => prev - 1);
             setSeconds(59);
@@ -41,6 +44,19 @@ function FocusTimer({ startMeditation }) {
     setSeconds(0);
   };
 
+  const popupStyle = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'rgba(0, 0, 0, 1)',
+    color: '#fff',
+    padding: '20px',
+    borderRadius: '10px',
+    textAlign: 'center',
+    zIndex: '1000',
+  };
+
   return (
     <div className="focus-timer">
       <h2>Focus Timer</h2>
@@ -56,6 +72,12 @@ function FocusTimer({ startMeditation }) {
       </p>
       <button onClick={startTimer}>Start</button>
       <button onClick={resetTimer}>Reset</button>
+
+      {showPopup && (
+        <div id="break-popup" style={popupStyle}>
+          <h2>Time for a break!</h2>
+        </div>
+      )}
     </div>
   );
 }
